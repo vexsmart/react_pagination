@@ -18,24 +18,24 @@ export const Pagination: React.FC<Props> = ({
     { length: totalInPage },
     (_, index) => index + 1,
   );
-  let clickedPage = currentPage;
 
-  if (clickedPage > pages.length || clickedPage <= 0) {
-    clickedPage = 1;
+
+  if (currentPage > pages.length || currentPage <= 0) {
+   onPageChange(1);
   }
 
   return (
     <>
       <ul className="pagination">
-        <li className={`page-item ${clickedPage === 1 ? 'disabled' : ''}`}>
+        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
           <a
             data-cy="prevLink"
             className="page-link"
             href="#prev"
-            aria-disabled={clickedPage === 1}
+            aria-disabled={currentPage === 1}
             onClick={() => {
-              if (clickedPage > 1) {
-                onPageChange(clickedPage - 1);
+              if (currentPage > 1) {
+                onPageChange(currentPage - 1);
               }
             }}
           >
@@ -45,17 +45,18 @@ export const Pagination: React.FC<Props> = ({
         {pages.map(page => (
           <li
             key={page}
-            className={`page-item ${clickedPage === page ? 'active' : ''}`}
+            className={`page-item ${currentPage === page ? 'active' : ''}`}
           >
             <a
               data-cy="pageLink"
               className="page-link"
               href={`#${page}`}
               onClick={() => {
-                if (clickedPage === page) {
+                if (currentPage === page) {
                   return;
                 }
-                onPageChange(page)
+
+                onPageChange(page);
               }}
             >
               {page}
@@ -63,16 +64,16 @@ export const Pagination: React.FC<Props> = ({
           </li>
         ))}
         <li
-          className={`page-item ${clickedPage === pages.length ? 'disabled' : ''}`}
+          className={`page-item ${currentPage === pages.length ? 'disabled' : ''}`}
         >
           <a
             data-cy="nextLink"
             className="page-link"
             href="#next"
-            aria-disabled={clickedPage === pages.length}
+            aria-disabled={currentPage === pages.length}
             onClick={() => {
-              if (clickedPage < pages.length) {
-                onPageChange(clickedPage + 1);
+              if (currentPage < pages.length) {
+                onPageChange(currentPage + 1);
               }
             }}
           >
